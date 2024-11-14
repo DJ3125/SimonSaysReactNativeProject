@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "SimonSays",
-    "slug": "SimonSays",
+    "slug": "simonsays",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -36,6 +36,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "d845e642-65fb-4abd-a153-15b89ab3b489"
+      }
+    },
+    "owner": "dj3125"
   }
 }
