@@ -1,4 +1,6 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
+import {useSharedValue} from "react-native-reanimated";
+
 
 import { Image, StyleSheet, Platform } from 'react-native';
 
@@ -10,10 +12,24 @@ import { ThemedView } from '@/components/ThemedView';
 import { Gyroscope } from 'expo-sensors';
 
 export default function HomeScreen() {
-  // const [xTilt, setXTilt] = useState();
-  Gyroscope.addListener(function(data){
-    console.log(data.x);
-  });
+  const tiltX = useSharedValue(0);
+
+
+  // const [xTilt, setXTilt] = useState(0);
+  Gyroscope.setUpdateInterval(50);
+  // Gyroscope.addListener(function(data){
+  //   setXTilt(data.x);
+  // });
+
+  // const [displayX, setDisplayX] = useState(xTilt);
+  useEffect(function(){
+    // setDisplayX(xTilt);
+    const subscription = Gyroscope.addListener(function(data){
+      tiltX.set(data.x);
+    });
+
+    return ()=>{subscription.remove();};
+  }, [tiltX]);
 
   return (
     <ParallaxScrollView
@@ -25,7 +41,7 @@ export default function HomeScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!!!!!!!!!!</ThemedText>
+        <ThemedText type="title">{tiltX.get()}</ThemedText>
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
